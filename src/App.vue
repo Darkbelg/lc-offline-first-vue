@@ -66,7 +66,9 @@ export default {
   methods: {
     async getDatabase(){
       return new Promise((resolve,reject) => {
-        let db = window.indexedDB.open("notes", 2) ;
+        let db = window.indexedDB.open("notes") ;
+        // Do it to upgrade a excisting database
+        //let db = window.indexedDB.open("notes", 2) ;
 
         db.onerror = e => {
           reject('Error opening the database.')
@@ -81,7 +83,8 @@ export default {
 
         db.onupgradeneeded = e => {
           console.log('db.onupgradeneeded',e);
-          e.target.result.deleteObjectStore("notes");
+          //only use when upgrading database. Can't delete what you don't have
+          // e.target.result.deleteObjectStore("notes");
           e.target.result.createObjectStore("notes", { keyPath: "created" });
         };
       });
