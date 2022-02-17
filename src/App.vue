@@ -160,13 +160,18 @@ export default {
         // };
 
         //Shorter chained alternative
-        this.database.transaction('notes')
+
+        let notes = this.database.transaction('notes')
             .objectStore('notes')
-            .getAll()
-            .onsuccess = e => {
+            .getAll();
+        notes.onsuccess = e => {
             console.log('getNotes()', e.target.result);
               resolve(e.target.result);
             };
+        notes.onerror = e => {
+              console.log('failed getting the notes');
+              reject("no notes")
+        }
       });
     },
     openNote(note){
