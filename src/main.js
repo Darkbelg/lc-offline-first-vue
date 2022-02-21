@@ -58,6 +58,7 @@ const store = createStore({
                 db.onsuccess = e => {
                     console.log('db.onsuccess', e);
                     commit('updateDatabase', e.target.result);
+                    resolve('test');
                 };
 
                 db.onupgradeneeded = e => {
